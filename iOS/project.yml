@@ -1,0 +1,71 @@
+name: TableDetector
+
+options:
+  bundleIdPrefix: com.robusttabledetection
+  deploymentTarget:
+    iOS: "26.0"
+  createIntermediateGroups: true
+
+configs:
+  Debug: debug
+  Release: release
+
+packages:
+  onnxruntime:
+    url: https://github.com/microsoft/onnxruntime-swift-package-manager
+    from: 1.24.2
+
+targets:
+  TableDetector:
+    type: application
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: TableDetector
+    settings:
+      base:
+        PRODUCT_NAME: TableDetector
+        PRODUCT_BUNDLE_IDENTIFIER: com.robusttabledetection.TableDetector
+        CODE_SIGN_STYLE: Automatic
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: TableDetector
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_UIRequiresFullScreen: YES
+        TARGETED_DEVICE_FAMILY: "1"
+        SWIFT_VERSION: "5.0"
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+    dependencies:
+      - package: onnxruntime
+        product: onnxruntime
+
+  TableDetectorTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: TableDetectorTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.robusttabledetection.TableDetectorTests
+        CODE_SIGN_STYLE: Automatic
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "5.0"
+    dependencies:
+      - target: TableDetector
+
+schemes:
+  TableDetector:
+    build:
+      targets:
+        TableDetector: all
+        TableDetectorTests: [test]
+    test:
+      config: Debug
+      targets:
+        - TableDetectorTests
+    run:
+      config: Debug
+    archive:
+      config: Release

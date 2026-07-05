@@ -1,0 +1,10 @@
+## Xcode user-specific state, not meant to be committed.
+xcuserdata/
+*.xcuserstate
+
+## Local build products.
+DerivedData/
+build/
+
+## SPM local checkout cache (Package.resolved is kept, checkouts are not).
+.swiftpm/
